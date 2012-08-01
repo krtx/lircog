@@ -8,7 +8,7 @@
         :local-time
         :url-rewrite)
   (:import-from :lircog.parse
-                :parse-one-line)
+                :channel-log)
   (:import-from :local-time)
   (:import-from :lircog.util)
   (:import-from :cl-who
@@ -36,12 +36,6 @@
                                                            (if date (concatenate 'string "/" date) ""))
                                              (str channel)))))))))
 
-
-(defun channel-log (stream channel date)
-  (with-html-output (stream)
-    (:div :class "channel-log"
-          (loop for log in (get-row-log channel date)
-                do (parse-one-line stream log)))))
 
 (defun pager (stream channel date)
   (with-html-output (stream)
@@ -90,12 +84,13 @@
         (header ret)
         (:body
          (:div :class "container-fluid"
-               (:div :class "span4 sidebar-nav-fixed" (channel-list ret channel date))
+               (:div :class "span4 sidebar-nav-fixed"
+                     (channel-list ret channel date))
                (if channel
                    (htm
-                    (:div :class "span10 offset4"
+                    (:div :class "span9 offset4"
                           (:h1 :class "page-header" (str date))
                           (:div
-                           (channel-log ret channel date)
+                           (channel-log ret (get-row-log channel date))
                            (pager ret channel date)))))))))))
 
