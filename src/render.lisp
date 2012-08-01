@@ -39,10 +39,9 @@
 
 (defun channel-log (stream channel date)
   (with-html-output (stream)
-    (:table :class "table-condensed"
-     (:tbody 
-      (loop for log in (get-row-log channel date)
-            do (parse-one-line stream log))))))
+    (:div :class "channel-log"
+          (loop for log in (get-row-log channel date)
+                do (parse-one-line stream log)))))
 
 (defun pager (stream channel date)
   (with-html-output (stream)
