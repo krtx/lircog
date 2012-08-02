@@ -38,7 +38,7 @@
       (clack.middleware.auth.basic:<clack-middleware-auth-basic>
        :authenticator #'(lambda (user pass)
                           (and (string= user "irclog")
-                               (string= pass "golori"))))
+                               (string= pass "gologolori"))))
       (clack.middleware.static:<clack-middleware-static>
        :path (lambda (path)
                (when (ppcre:scan "^(?:/static/|/images/|/css/|/js/|/robot\\.txt$|/favicon.ico$)" path)

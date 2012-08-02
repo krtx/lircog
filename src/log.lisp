@@ -8,7 +8,7 @@
 
 (cl-syntax:use-syntax :annot)
 
-(defparameter *log-directory* #P"/home/minoru/quicklisp/local-projects/lircog/log/")
+(defparameter *log-directory* #P"/home/minoru/irc/tiarra-20100212/log/")
 
 @export
 (defun get-channel-list ()
