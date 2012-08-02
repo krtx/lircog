@@ -4,6 +4,7 @@
         :lircog.render
         :clack
         :clack.middleware.static
+        :clack.middleware.auth.basic
         :clack.builder)
   (:import-from :lircog.render
                 :render))
@@ -34,6 +35,10 @@
 (defvar *handler*
     (clack:clackup
      (clack.builder:builder
+      (clack.middleware.auth.basic:<clack-middleware-auth-basic>
+       :authenticator #'(lambda (user pass)
+                          (and (string= user "irclog")
+                               (string= pass "golori"))))
       (clack.middleware.static:<clack-middleware-static>
        :path (lambda (path)
                (when (ppcre:scan "^(?:/static/|/images/|/css/|/js/|/robot\\.txt$|/favicon.ico$)" path)

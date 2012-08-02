@@ -12,14 +12,6 @@
 
 ;; privmsg notice others の３つに分ける
 
-(defmacro regcommand (name elems regex &rest html)
-  (with-gensyms (stream line prev)
-    `(defun ,name (,stream ,line &optional ,prev)
-       (register-groups-bind ,elems
-           (,regex ,line)
-         (with-html-output (,stream)
-           ,@html)))))
-
 (defun privmsg (stream line &optional prev)
   (register-groups-bind (time channel _ nick message)
       ("^(\\d{2}:\\d{2}):\\d{2} [<>]([^:]+):(\\*\\.jp:)?([^<>]+)[<>] (.*)$" line)
@@ -50,8 +42,8 @@
 (defun channel-log (stream log)
   (with-html-output (stream)
     (:div :class "channel-log"
-          (loop for log in log
-                do (or (privmsg stream log)
-                       (notice stream log)
-                       (message stream log))))))
-
+          (loop for line in log
+                and prev = line
+                do (loop for f in '(privmsg notice message)
+                         for it = (funcall f stream line prev)
+                         when it return it)))))

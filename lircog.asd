@@ -10,6 +10,7 @@
   :license ""
   :depends-on (:ningle
                :clack
+               :clack-middleware-auth-basic
                :cl-syntax
                :cl-syntax-annot
                :cl-who
