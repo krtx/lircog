@@ -43,6 +43,6 @@
        :path (lambda (path)
                (when (ppcre:scan "^(?:/static/|/images/|/css/|/js/|/robot\\.txt$|/favicon.ico$)" path)
                  (ppcre:regex-replace "^/static" path "")))
-       :root #P"/home/minoru/quicklisp/local-projects/lircog/static/")
+       :root #P"/path/to/static/")
       <light-log>
       *app*)))
